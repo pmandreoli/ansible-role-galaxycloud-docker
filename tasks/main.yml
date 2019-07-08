@@ -1,0 +1,5 @@
+---
+# tasks file for docker_role
+- include: prerequisites.yml
+- include: docker_WA.yml
+- include: dockerRUN.yml

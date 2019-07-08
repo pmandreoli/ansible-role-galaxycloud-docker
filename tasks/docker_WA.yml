@@ -1,0 +1,5 @@
+---
+- name: Install docker-py
+  pip: 
+    name: docker-py>=1.7.0
+  when: ansible_os_family == "RedHat" and ansible_version.full < "2.3.0.0"

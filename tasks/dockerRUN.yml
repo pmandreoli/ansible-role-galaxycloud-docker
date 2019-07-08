@@ -1,0 +1,30 @@
+---
+- name: docker run
+  docker_container:
+    name: galaxydocker
+    image: bgruening/galaxy-stable
+    state: started
+    ports:
+      - "80:80"
+      - "21:21"
+      - "22:22"
+    detach: yes
+    env_file: /home/centos/docker-role/files/envfiledocker.txt
+  when: ansible_version.full >= "2.4.0.0"
+
+- name: "docker for 2.2.1"
+  docker: 
+    name: galaxydocker
+    image: bgruening/galaxy-stable
+    state: started
+    ports:
+      - "80:80"
+      - "21:21"
+      - "22:22"
+    detach: yes
+    env_file: /home/centos/docker-role/files/envfiledocker.txt
+    volumes:
+      - /home/user/galaxy_storage:/home/centos/volume:rw
+  when: ansible_version.full < "2.4.0.0"
+ 
+
