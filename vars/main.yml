@@ -1,2 +1,4 @@
 ---
-# vars file for docker_role
+docker_author: "bgruening"
+galaxy_flavour: "galaxy-stable"
+local_volume: "/home/centos/volume" 

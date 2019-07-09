@@ -1,30 +1,37 @@
 ---
-- name: docker run
+- name: Get Galaxy version number only for comparison
+  set_fact:
+    galaxy_version_number: "{{ GALAXY_VERSION | replace('release_','') }}"
+
+
+- name: "galaxy docker run :TASK specific for ansible >2.4"
   docker_container:
     name: galaxydocker
-    image: bgruening/galaxy-stable
+    image: "{{ docker_author }}/{{ galaxy_flavour }}:{{ galaxy_version_number }}" 
     state: started
     ports:
       - "80:80"
       - "21:21"
       - "22:22"
     detach: yes
-    env_file: /home/centos/docker-role/files/envfiledocker.txt
-  when: ansible_version.full >= "2.4.0.0"
-
-- name: "docker for 2.2.1"
-  docker: 
-    name: galaxydocker
-    image: bgruening/galaxy-stable
-    state: started
-    ports:
-      - "80:80"
-      - "21:21"
-      - "22:22"
-    detach: yes
-    env_file: /home/centos/docker-role/files/envfiledocker.txt
+    env_file: "{{role_path}}/templates/env.yml"
     volumes:
       - /home/user/galaxy_storage:/home/centos/volume:rw
+  when: ansible_version.full >= "2.4.0.0"
+
+- name: "installation of docker-py and galaxy docker run :TASK specific for ansible <2.4"
+  docker: 
+    name: galaxydocker
+    image: "{{ docker_author }}/{{ galaxy_flavour }}:{{ galaxy_version_number }}" 
+    state: started
+    ports:
+      - "80:80"
+      - "21:21"
+      - "22:22"
+    detach: yes
+    env_file: "{{role_path}}/templates/env.yml"
+    volumes:
+      - /home/user/galaxy_storage:{{ local_volume }}:rw
   when: ansible_version.full < "2.4.0.0"
  
 
