@@ -1,4 +1,4 @@
 ---
 docker_author: "bgruening"
 galaxy_flavour: "galaxy-stable"
-local_volume: "/home/centos/volume" 
+local_volume: "/export" 

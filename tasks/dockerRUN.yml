@@ -16,7 +16,7 @@
     detach: yes
     env_file: "{{role_path}}/templates/env.yml"
     volumes:
-      - /home/user/galaxy_storage:/home/centos/volume:rw
+      - "{{ local_volume }}:{{ local_volume }}:rw"
   when: ansible_version.full >= "2.4.0.0"
 
 - name: "installation of docker-py and galaxy docker run :TASK specific for ansible <2.4"
@@ -31,7 +31,7 @@
     detach: yes
     env_file: "{{role_path}}/templates/env.yml"
     volumes:
-      - /home/user/galaxy_storage:{{ local_volume }}:rw
+      - "{{ local_volume }}:{{ local_volume }}:rw"
   when: ansible_version.full < "2.4.0.0"
  
 
