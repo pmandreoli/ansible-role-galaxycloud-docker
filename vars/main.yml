@@ -1,4 +1,1 @@
 ---
-docker_author: "bgruening"
-galaxy_flavour: "galaxy-stable"
-local_volume: "/export" 

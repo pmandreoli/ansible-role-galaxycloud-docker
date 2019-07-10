@@ -7,7 +7,7 @@
 - name: "galaxy docker run :TASK specific for ansible >2.4"
   docker_container:
     name: galaxydocker
-    image: "{{ docker_author }}/{{ galaxy_flavour }}:{{ galaxy_version_number }}" 
+    image: "{{ galaxy_flavour }}:{{ galaxy_version_number }}"
     state: started
     ports:
       - "80:80"
@@ -22,7 +22,7 @@
 - name: "installation of docker-py and galaxy docker run :TASK specific for ansible <2.4"
   docker: 
     name: galaxydocker
-    image: "{{ docker_author }}/{{ galaxy_flavour }}:{{ galaxy_version_number }}" 
+    image: "{{ galaxy_flavour }}:{{ galaxy_version_number }}" 
     state: started
     ports:
       - "80:80"
