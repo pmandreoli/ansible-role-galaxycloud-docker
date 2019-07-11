@@ -1,0 +1,12 @@
+---
+
+- name: dir galaxy creation
+  file:
+    path: "{{ export_dir }}/galaxy"
+    state: directory
+
+
+- name: docker_image dir creation
+  file:
+    path: "{{ export_dir }}/docker_image"
+    state: directory

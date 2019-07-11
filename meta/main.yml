@@ -11,4 +11,4 @@ galaxy_info:
     - galaxy docker
 
 dependencies:
-  - { role: indigo-dc.docker, docker_config:  { "data-root": "{{ export_dir }}", }}
+  - { role: indigo-dc.docker, docker_config:  { "data-root": "{{ export_dir }}/docker_image", }}
