@@ -3,7 +3,6 @@
   set_fact:
     galaxy_version_number: "{{ GALAXY_VERSION | replace('release_','') }}"
 
-
 - name: "galaxy docker run :TASK specific for ansible >2.4"
   docker_container:
     name: galaxydocker
@@ -33,5 +32,3 @@
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
   when: ansible_version.full < "2.4.0.0"
- 
-
