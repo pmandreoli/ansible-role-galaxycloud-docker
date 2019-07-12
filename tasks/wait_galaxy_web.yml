@@ -1,0 +1,10 @@
+---
+#check if galaxy web is running 
+- name: wait until galaxy web is avaiable
+  uri:
+    url: "http://localhost:80"
+    status_code: 200
+  register: result 
+  until: result.status == 200
+  retries: 2000 
+  delay: 1

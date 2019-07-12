@@ -4,3 +4,4 @@
 - include: prerequisites.yml
 - include: docker_fix.yml
 - include: docker_run.yml
+- include: wait_galaxy_web.yml
