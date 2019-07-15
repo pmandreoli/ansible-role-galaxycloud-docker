@@ -1,6 +1,7 @@
 ---
 
 - name: dir galaxy creation
+  become_user: centos
   file:
     path: "{{ export_dir }}/galaxy"
     state: directory

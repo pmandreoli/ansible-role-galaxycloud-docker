@@ -1,0 +1,30 @@
+---
+- name: stat docker_sample
+  stat: 
+    path: "{{galaxy_config_path}}/galaxy.yml.docker_sample"
+  register: galaxydockerconf
+
+- name: stat galaxy-yml
+  stat:
+    path: "{{galaxy_config_path}}/galaxy.yml"
+  register: galaxyconf
+
+- name: rename galaxy-yml
+  command: mv {{galaxy_config_path}}/galaxy.yml.docker_sample {{galaxy_config_path}}/galaxy.yml
+  when: galaxyconf.stat.exists == False and galaxydockerconf.stat.exists == True
+
+
+- name: Set some galaxyYML parameters
+  lineinfile:
+    dest: "{{galaxy_config_path}}/galaxy.yml"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: ' #admin_users: null', line: '  admin_users: {{ GALAXY_ADMIN_EMAIL }}' }
+    - { regexp: ' #brand: null', line: '  brand: {{ galaxy_instance_description }}' }
+  when: galaxyconf.stat.exists == False and galaxydockerconf.stat.exists == True
+
+- name: restart galaxy 
+  become_user: root
+  command: docker exec galaxydocker /bin/bash -c "supervisorctl restart galaxy:"
+  when: galaxyconf.stat.exists == False and galaxydockerconf.stat.exists == True

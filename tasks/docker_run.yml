@@ -13,7 +13,8 @@
       - "21:21"
       - "22:22"
     detach: yes
-    env_file: "{{role_path}}/templates/env.yml"
+    env:
+      GALAXY_CONFIG_FILE: "{{galaxy_config_path}}/galaxy.yml"
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
   when: ansible_version.full >= "2.4.0.0"
@@ -28,7 +29,7 @@
       - "21:21"
       - "22:22"
     detach: yes
-    env_file: "{{role_path}}/templates/env.yml"
+    env: GALAXY_CONFIG_FILE={{galaxy_config_path}}/galaxy.yml
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
   when: ansible_version.full < "2.4.0.0"
