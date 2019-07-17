@@ -9,7 +9,7 @@
     dest: '{{ item.dest }}'
   with_items:
     - { template: default.local.j2, dest: /etc/cvmfs/default.local }
-    - { template: repository.conf.j2, dest: '/etc/cvmfs/config.d/{{ REPOSITORY_NAME }}.conf' }
+    - { template: repository.conf.j2, dest: '/etc/cvmfs/config.d/{{ repository_name }}.conf' }
 
 #______________________________________
 # download the required key.pub of the selected repository from github
@@ -17,6 +17,6 @@
 
 - name: download repository public key from github
   get_url:
-    url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_keys/{{ REPOSITORY_NAME }}.pub'
-    dest: '/etc/cvmfs/keys/{{ REPOSITORY_NAME }}.pub'
+    url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_keys/{{ repository_name }}.pub'
+    dest: '/etc/cvmfs/keys/{{ repository_name }}.pub'
 
