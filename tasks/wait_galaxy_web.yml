@@ -8,3 +8,7 @@
   until: result.status == 200
   retries: 2000 
   delay: 1
+
+- name: load cvmfs repository
+  become_user: root
+  shell: docker exec galaxydocker cvmfs_config probe

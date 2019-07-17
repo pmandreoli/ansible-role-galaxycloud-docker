@@ -1,6 +1,7 @@
 ---
 # tasks file for docker_role
-- include: dir_creation.yml 
+- include: dir_creation.yml
+- include: client_config.yml 
 - include: prerequisites.yml
 - include: docker_fix.yml
 - include: docker_run.yml

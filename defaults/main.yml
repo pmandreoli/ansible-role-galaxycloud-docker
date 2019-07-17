@@ -144,3 +144,17 @@ enable_storage_advanced_options: false
 # If yes, galaxy is not started
 galaxy_flavor: 'galaxy-no-tools'
 get_refdata: false
+
+#______________________________________
+#cvmfs variable for j2 templates
+REPOSITORY_NAME: 'elixir-italy.covacs.refdata'
+SERVER_URL: '90.147.75.251'
+CVMFS_SERVER_URL: 'http://{{ SERVER_URL }}/cvmfs/{{ REPOSITORY_NAME }}'
+CVMFS_PUBLIC_KEY_PATH: '/etc/cvmfs/keys'
+CVMFS_PUBLIC_KEY: '{{ REPOSITORY_NAME }}.pub'
+PROXY_URL: 'DIRECT'
+PROXY_PORT: 80
+CVMFS_HTTP_PROXY: 'http://{{ PROXY_URL }}:{{ PROXY_PORT }}'
+CVMFS_MOUNTPOINT: '/cvmfs'
+
+

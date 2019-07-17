@@ -11,3 +11,14 @@
   file:
     path: "{{ export_dir }}/docker_image"
     state: directory
+
+- name: cvmfs local dir tree creation
+  become_user: root
+  file:
+    path: "{{ item.path }}"
+    state: "{{ item.state }}"
+  with_items:
+    - { path: /etc/cvmfs/default.d , state: directory }
+    - { path: /etc/cvmfs/keys , state: directory }
+    - { path: /etc/cvmfs/config.d , state: directory }
+
