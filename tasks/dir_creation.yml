@@ -1,16 +1,26 @@
 ---
 
+#______________________________________
+# galaxy dir creation that will contain the galaxydocker /export
+# directory
+
 - name: dir galaxy creation
   become_user: centos
   file:
     path: "{{ export_dir }}/galaxy"
     state: directory
 
+#_____________________________________
+# docker_image dir creation that will contain docker images
 
 - name: docker_image dir creation
   file:
     path: "{{ export_dir }}/docker_image"
     state: directory
+
+#______________________________________
+# create the local cvmfs directory tree in order to mount cvmfs configuration
+# files into galaxydocker
 
 - name: cvmfs local dir tree creation
   become_user: root

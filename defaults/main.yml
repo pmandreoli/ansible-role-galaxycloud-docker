@@ -146,7 +146,8 @@ galaxy_flavor: 'galaxy-no-tools'
 get_refdata: false
 
 #______________________________________
-#cvmfs variable for j2 templates
+#cvmfs variable for j2 templates in order to mount the selected CVMFS repository
+
 REPOSITORY_NAME: 'elixir-italy.covacs.refdata'
 SERVER_URL: '90.147.75.251'
 CVMFS_SERVER_URL: 'http://{{ SERVER_URL }}/cvmfs/{{ REPOSITORY_NAME }}'

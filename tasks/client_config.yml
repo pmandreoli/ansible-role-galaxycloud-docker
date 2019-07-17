@@ -1,5 +1,8 @@
 ---
 
+#______________________________________
+# set cvmfs configuration files using j2 templates
+
 - name: set cvmfs configuration files
   template:
     src: '{{ item.template }}'
@@ -8,7 +11,11 @@
     - { template: default.local.j2, dest: /etc/cvmfs/default.local }
     - { template: repository.conf.j2, dest: '/etc/cvmfs/config.d/{{ REPOSITORY_NAME }}.conf' }
 
-- name: download repository public key
+#______________________________________
+# download the required key.pub of the selected repository from github
+# and paste it in the cvmfs key directory
+
+- name: download repository public key from github
   get_url:
     url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_keys/{{ REPOSITORY_NAME }}.pub'
     dest: '/etc/cvmfs/keys/{{ REPOSITORY_NAME }}.pub'

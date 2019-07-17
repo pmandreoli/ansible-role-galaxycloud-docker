@@ -1,4 +1,8 @@
 ---
+
+#______________________________________
+#modify galaxy.yml file in order to set administrator credentials
+
 - name: stat docker_sample
   stat: 
     path: "{{galaxy_config_path}}/galaxy.yml.docker_sample"
@@ -14,7 +18,7 @@
   when: galaxyconf.stat.exists == False and galaxydockerconf.stat.exists == True
 
 
-- name: Set some galaxyYML parameters
+- name: Set galaxyYML parameters
   lineinfile:
     dest: "{{galaxy_config_path}}/galaxy.yml"
     regexp: "{{ item.regexp }}"
@@ -23,6 +27,9 @@
     - { regexp: ' #admin_users: null', line: '  admin_users: {{ GALAXY_ADMIN_EMAIL }}' }
     - { regexp: ' #brand: null', line: '  brand: {{ galaxy_instance_description }}' }
   when: galaxyconf.stat.exists == False and galaxydockerconf.stat.exists == True
+
+#_____________________________________
+# restart galaxy inside docker using supervisorctl
 
 - name: restart galaxy 
   become_user: root
