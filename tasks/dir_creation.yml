@@ -5,7 +5,7 @@
 # directory
 
 - name: dir galaxy creation
-  become_user: centos
+  become_user: galaxy
   file:
     path: "{{ export_dir }}/galaxy"
     state: directory
