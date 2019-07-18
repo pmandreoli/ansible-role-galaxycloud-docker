@@ -1,5 +1,4 @@
 ---
-
 #______________________________________
 # galaxy dir creation that will contain the galaxydocker /export
 # directory
@@ -31,4 +30,3 @@
     - { path: /etc/cvmfs/default.d , state: directory }
     - { path: /etc/cvmfs/keys , state: directory }
     - { path: /etc/cvmfs/config.d , state: directory }
-

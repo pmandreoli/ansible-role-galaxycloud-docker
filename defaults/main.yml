@@ -157,5 +157,3 @@ proxy_url: 'DIRECT'
 proxy_port: 80
 cvmfs_http_proxy: 'http://{{ proxy_url }}:{{ proxy_port }}'
 cvmfs_mountpoint: '/cvmfs'
-
-

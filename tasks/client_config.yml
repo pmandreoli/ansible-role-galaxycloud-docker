@@ -1,5 +1,4 @@
 ---
-
 #______________________________________
 # set cvmfs configuration files using j2 templates
 
@@ -19,4 +18,3 @@
   get_url:
     url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_keys/{{ repository_name }}.pub'
     dest: '/etc/cvmfs/keys/{{ repository_name }}.pub'
-
