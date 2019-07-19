@@ -18,8 +18,8 @@ galaxy_directory: galaxy
 galaxy_install_path: "{{galaxy_FS_path}}/{{galaxy_directory}}"
 
 # Galaxy config/galaxy.ini path
-galaxy_config_path: "{{galaxy_install_path}}/config"
-galaxy_config_file: "{{galaxy_config_path}}/galaxy.yml"
+galaxy_config_path: "/export/galaxy/galaxy-central/config"
+galaxy_config_file: "{{galaxy_config_file}}/galaxy.yml"
 
 # Galaxy version to install
 GALAXY_VERSION: "release_18.05"
