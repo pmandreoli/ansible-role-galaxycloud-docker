@@ -24,7 +24,7 @@
     privileged: yes
     env:
       GALAXY_CONFIG_BRAND: "{{ galaxy_instance_description }}"
-      GALAXY_DEFAULT_ADMIN_USER: "{{ GALAXY_ADMIN_EMAIL }}" 
+      GALAXY_CONFIG_ADMIN_USERS: "{{ GALAXY_ADMIN_EMAIL }}" 
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
       - "/etc/cvmfs/keys/{{ repository_name }}.pub:/etc/cvmfs/keys/{{ repository_name }}.pub:rw"
@@ -45,7 +45,7 @@
     privileged: yes
     env:
       GALAXY_CONFIG_BRAND: "{{ galaxy_instance_description }}"
-      GALAXY_DEFAULT_ADMIN_USER: "{{ GALAXY_ADMIN_EMAIL }}" 
+      GALAXY_CONFIG_ADMIN_USERS: "{{ GALAXY_ADMIN_EMAIL }}" 
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
       - "/etc/cvmfs/keys/{{ repository_name }}.pub:/etc/cvmfs/keys/{{ repository_name }}.pub:rw"
