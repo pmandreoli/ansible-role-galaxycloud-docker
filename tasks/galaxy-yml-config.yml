@@ -26,7 +26,7 @@
   with_items:
     - { regexp: ' #admin_users: null', line: '  admin_users: {{ GALAXY_ADMIN_EMAIL }}' }
     - { regexp: ' #brand: null', line: '  brand: {{ galaxy_instance_description }}' }
-  when: galaxyconf.stat.exists == False and galaxydockerconf.stat.exists == True
+  when: galaxyconf.stat.exists == True 
 
 #_____________________________________
 # restart galaxy inside docker using supervisorctl
@@ -34,4 +34,4 @@
 - name: restart galaxy 
   become_user: root
   command: docker exec galaxydocker /bin/bash -c "supervisorctl restart galaxy:"
-  when: galaxyconf.stat.exists == False and galaxydockerconf.stat.exists == True
+  when: galaxyconf.stat.exists == True
