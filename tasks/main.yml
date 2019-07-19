@@ -8,5 +8,10 @@
 - include: prerequisites.yml
 - include: docker_fix.yml
 - include: docker_run.yml
+  when: repository_name != "data.galaxyproject.org"
+- include: docker_run_default.yml
+  when: repository_name == "data.galaxyproject.org"
 - include: wait_galaxy_web.yml
+- include: mount_cvmfs.yml
+  when: repository_name != "data.galaxyproject.org"
 - include: galaxy-yml-config.yml
