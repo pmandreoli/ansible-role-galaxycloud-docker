@@ -1,5 +1,8 @@
 ---
-#check if galaxy web is running 
+
+#______________________________________
+# wait for galaxy docker to be accessible by browser
+
 - name: wait until galaxy web is avaiable
   uri:
     url: "http://localhost:80"
@@ -8,3 +11,11 @@
   until: result.status == 200
   retries: 2000 
   delay: 1
+
+#______________________________________
+# mount cvmfs repository selected running cvmfs_config in the container
+
+- name: load cvmfs repository
+  become: true
+  become_user: root
+  shell: docker exec galaxydocker cvmfs_config probe

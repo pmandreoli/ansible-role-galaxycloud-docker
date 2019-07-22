@@ -1,7 +1,12 @@
 ---
-# tasks file for docker_role
-- include: dir_creation.yml 
+
+#______________________________________
+#task files for ansible-role-galaxycloud-docker
+
+- include: dir_creation.yml
+- include: client_config.yml 
 - include: prerequisites.yml
 - include: docker_fix.yml
 - include: docker_run.yml
 - include: wait_galaxy_web.yml
+- include: galaxy-yml-config.yml

@@ -18,8 +18,8 @@ galaxy_directory: galaxy
 galaxy_install_path: "{{galaxy_FS_path}}/{{galaxy_directory}}"
 
 # Galaxy config/galaxy.ini path
-galaxy_config_path: "{{galaxy_install_path}}/config"
-galaxy_config_file: "{{galaxy_config_path}}/galaxy.yml"
+galaxy_config_path: "/export/galaxy-central/config"
+galaxy_config_file: "{{galaxy_config_file}}/galaxy.yml"
 
 # Galaxy version to install
 GALAXY_VERSION: "release_18.05"
@@ -142,5 +142,20 @@ enable_storage_advanced_options: false
 #______________________________________
 # Inform the role if galaxy tools and reference data will be installed
 # If yes, galaxy is not started
-galaxy_flavor: 'galaxy-no-tools'
+galaxy_flavor: 'bgruening/galaxy-stable'
 get_refdata: false
+
+#______________________________________
+#cvmfs variable for j2 templates in order to mount the selected CVMFS repository
+
+repository_name: 'elixir-italy.covacs.refdata'
+server_url: '90.147.75.251'
+cvmfs_server_url: 'http://{{ server_url }}/cvmfs/{{ repository_name }}'
+cvmfs_public_key_path: '/etc/cvmfs/keys'
+cvmfs_public_key: '{{ repository_name }}.pub'
+proxy_url: 'DIRECT'
+proxy_port: 80
+cvmfs_http_proxy: 'http://{{ proxy_url }}:{{ proxy_port }}'
+cvmfs_mountpoint: '/cvmfs'
+
+
