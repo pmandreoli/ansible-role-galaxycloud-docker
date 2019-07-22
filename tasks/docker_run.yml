@@ -22,7 +22,9 @@
       - "22:22"
     detach: yes
     privileged: yes
-    env: GALAXY_CONFIG_FILE={{galaxy_config_path}}/galaxy.yml
+    env:
+      GALAXY_CONFIG_BRAND: "{{ galaxy_instance_description }}"
+      GALAXY_CONFIG_ADMIN_USERS: "{{ GALAXY_ADMIN_EMAIL }}" 
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
       - "/etc/cvmfs/keys/{{ repository_name }}.pub:/etc/cvmfs/keys/{{ repository_name }}.pub:rw"
@@ -41,7 +43,9 @@
       - "22:22"
     detach: yes
     privileged: yes
-    env: GALAXY_CONFIG_FILE={{galaxy_config_path}}/galaxy.yml
+    env:
+      GALAXY_CONFIG_BRAND: "{{ galaxy_instance_description }}"
+      GALAXY_CONFIG_ADMIN_USERS: "{{ GALAXY_ADMIN_EMAIL }}" 
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
       - "/etc/cvmfs/keys/{{ repository_name }}.pub:/etc/cvmfs/keys/{{ repository_name }}.pub:rw"
