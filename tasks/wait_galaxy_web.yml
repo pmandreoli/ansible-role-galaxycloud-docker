@@ -18,4 +18,5 @@
 - name: load cvmfs repository
   become: true
   become_user: root
+  become_method: sudo
   shell: docker exec galaxydocker cvmfs_config probe
