@@ -3,9 +3,9 @@
 #______________________________________
 # set galaxy_docker_flag from  GALAXY_VERSION variable
 
-- name: Get Galaxy version number for docker flag
-  set_fact:
-    galaxy_docker_flag: "{{ GALAXY_VERSION | replace('release_','') }}"
+#- name: Get Galaxy version number for docker flag
+#  set_fact:
+#    galaxy_docker_flag: "{{ GALAXY_VERSION | replace('release_','') }}"
 
 #______________________________________
 # run galaxy docker mounting /export dir and cvmfs config files
@@ -14,7 +14,7 @@
 - name: "galaxy docker run for default cvmfs configuration:TASK specific for ansible >2.4"
   docker_container:
     name: galaxydocker
-    image: "{{ galaxy_flavor }}:{{ galaxy_docker_flag }}"
+    image: "{{ galaxy_flavor }}"
     state: started
     ports:
       - "80:80"
@@ -32,7 +32,7 @@
 - name: "installation of docker-py and galaxy docker run run for default cvmfs configuration :TASK specific for ansible <2.4"
   docker: 
     name: galaxydocker
-    image: "{{ galaxy_flavor }}:{{ galaxy_docker_flag }}" 
+    image: "{{ galaxy_flavor }}"
     state: started
     ports:
       - "80:80"
