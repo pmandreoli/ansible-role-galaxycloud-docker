@@ -12,3 +12,11 @@
   retries: 2000 
   delay: 1
 
+#______________________________________
+# mount cvmfs repository selected running cvmfs_config in the container
+
+- name: load cvmfs repository
+  become: true
+  become_user: root
+  become_method: sudo
+  shell: docker exec galaxydocker cvmfs_config probe
