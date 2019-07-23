@@ -35,13 +35,21 @@ Role Variables
 ### Galaxy CVMFS role variable ###
 
 ``repository_name``: name of the cvmfs repository to mount inside the Docker container default = "elixir-italy.covacs.refdata"
+
 ``server_url``: "<IP ADDRESS OR URL STRATUM 0 OR STRATUM 1 SERVER>", **default** = "90.147.75.251"
+
 ``cvmfs_server_url``: "http://{{ server_url }}/cvmfs/{{ repository_name }}"
+
 ``cvmfs_public_key_path``: path were the cvmfs keys will be downloaded, **default** =  "/etc/cvmfs/keys"
+
 ``cvmfs_public_key``: "{{ repository_name }}.pub"
+
 ``proxy_url``: "\<PROXY SERVER OR DIRECT>", **default** = DIRECT
+
 ``proxy_port``: 80
+
 ``cvmfs_http_proxy``: "http://{{ proxy_url }}:{{ proxy_port }}"
+
 ``cvmfs_mountpoint``: mountpoint of the docker for the CVMFS server, **default** = "/cvmfs"
 
 
