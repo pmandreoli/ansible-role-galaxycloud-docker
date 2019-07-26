@@ -9,8 +9,8 @@
     status_code: 200
   register: result 
   until: result.status == 200
-  retries: 2000 
-  delay: 1
+  retries: 60 
+  delay: 60
 
 #______________________________________
 # mount cvmfs repository selected running cvmfs_config in the container
