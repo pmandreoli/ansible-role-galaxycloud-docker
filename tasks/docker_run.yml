@@ -1,11 +1,11 @@
 ---
 
 #______________________________________
-# set galaxy_docker_flag from  GALAXY_VERSION variable
+# set galaxy_version_number from  GALAXY_VERSION variable
 
-- name: Get Galaxy version number only for comparison
-  set_fact:
-    galaxy_docker_flag: "{{ GALAXY_VERSION | replace('release_','') }}"
+#- name: Get Galaxy version number only for comparison
+#  set_fact:
+#    galaxy_version_number: "{{ GALAXY_VERSION | replace('release_','') }}"
 
 #______________________________________
 # run galaxy docker mounting /export dir and cvmfs config files
@@ -14,7 +14,7 @@
 - name: "galaxy docker run :TASK specific for ansible >2.4"
   docker_container:
     name: galaxydocker
-    image: "{{ galaxy_flavor }}:{{ galaxy_docker_flag }}"
+    image: "{{ galaxy_flavor }}"
     state: started
     ports:
       - "80:80"
@@ -22,7 +22,9 @@
       - "22:22"
     detach: yes
     privileged: yes
-    env: GALAXY_CONFIG_FILE={{galaxy_config_path}}/galaxy.yml
+    env:
+      GALAXY_CONFIG_BRAND: "{{ galaxy_instance_description }}"
+      GALAXY_CONFIG_ADMIN_USERS: "{{ GALAXY_ADMIN_EMAIL }}" 
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
       - "/etc/cvmfs/keys/{{ repository_name }}.pub:/etc/cvmfs/keys/{{ repository_name }}.pub:rw"
@@ -33,7 +35,7 @@
 - name: "installation of docker-py and galaxy docker run :TASK specific for ansible <2.4"
   docker: 
     name: galaxydocker
-    image: "{{ galaxy_flavor }}:{{ galaxy_docker_flag }}" 
+    image: "{{ galaxy_flavor }}"
     state: started
     ports:
       - "80:80"
@@ -41,7 +43,9 @@
       - "22:22"
     detach: yes
     privileged: yes
-    env: GALAXY_CONFIG_FILE={{galaxy_config_path}}/galaxy.yml
+    env:
+      GALAXY_CONFIG_BRAND: "{{ galaxy_instance_description }}"
+      GALAXY_CONFIG_ADMIN_USERS: "{{ GALAXY_ADMIN_EMAIL }}" 
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
       - "/etc/cvmfs/keys/{{ repository_name }}.pub:/etc/cvmfs/keys/{{ repository_name }}.pub:rw"

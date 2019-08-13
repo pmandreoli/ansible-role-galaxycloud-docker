@@ -3,18 +3,18 @@
 #______________________________________
 # set galaxy_docker_flag from  GALAXY_VERSION variable
 
-- name: Get Galaxy version number only for comparison
-  set_fact:
-    galaxy_docker_flag: "{{ GALAXY_VERSION | replace('release_','') }}"
+#- name: Get Galaxy version number for docker flag
+#  set_fact:
+#    galaxy_docker_flag: "{{ GALAXY_VERSION | replace('release_','') }}"
 
 #______________________________________
 # run galaxy docker mounting /export dir and cvmfs config files
 # both for ansible version >2.4 and <2.4
 
-- name: "galaxy docker run :TASK specific for ansible >2.4"
+- name: "galaxy docker run for default cvmfs configuration:TASK specific for ansible >2.4"
   docker_container:
     name: galaxydocker
-    image: "{{ galaxy_flavor }}:{{ galaxy_docker_flag }}"
+    image: "{{ galaxy_flavor }}"
     state: started
     ports:
       - "80:80"
@@ -22,15 +22,17 @@
       - "22:22"
     detach: yes
     privileged: yes
-    env: GALAXY_CONFIG_FILE={{galaxy_config_path}}/galaxy.yml
+    env:
+      GALAXY_CONFIG_BRAND: "{{ galaxy_instance_description }}"
+      GALAXY_CONFIG_ADMIN_USERS: "{{ GALAXY_ADMIN_EMAIL }}" 
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
   when: ansible_version.full >= "2.4.0.0"
 
-- name: "installation of docker-py and galaxy docker run :TASK specific for ansible <2.4"
+- name: "installation of docker-py and galaxy docker run run for default cvmfs configuration :TASK specific for ansible <2.4"
   docker: 
     name: galaxydocker
-    image: "{{ galaxy_flavor }}:{{ galaxy_docker_flag }}" 
+    image: "{{ galaxy_flavor }}"
     state: started
     ports:
       - "80:80"
@@ -38,7 +40,9 @@
       - "22:22"
     detach: yes
     privileged: yes
-    env: GALAXY_CONFIG_FILE={{galaxy_config_path}}/galaxy.yml
+    env:
+      GALAXY_CONFIG_BRAND: "{{ galaxy_instance_description }}"
+      GALAXY_CONFIG_ADMIN_USERS: "{{ GALAXY_ADMIN_EMAIL }}" 
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
   when: ansible_version.full < "2.4.0.0"

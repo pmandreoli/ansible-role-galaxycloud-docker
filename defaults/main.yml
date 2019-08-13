@@ -142,7 +142,7 @@ enable_storage_advanced_options: false
 #______________________________________
 # Inform the role if galaxy tools and reference data will be installed
 # If yes, galaxy is not started
-galaxy_flavor: 'bgruening/galaxy-stable'
+galaxy_flavor: 'bgruening/galaxy-stable:18.05'
 get_refdata: false
 
 #______________________________________
