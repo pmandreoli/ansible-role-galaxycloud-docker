@@ -20,3 +20,12 @@
   become_user: root
   become_method: sudo
   shell: docker exec galaxydocker cvmfs_config probe
+
+#______________________________________
+#restart container in case of reboot
+
+- name: update container in order to restart at reboot
+  become: true
+  become_user: root
+  become_method: sudo
+  shell: docker update --restart=always galaxydocker
