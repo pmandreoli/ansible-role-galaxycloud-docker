@@ -1,38 +1,86 @@
-Role Name
+galaxycloud_docker
 =========
+Run Galaxy Docker container inside a Centos7 virtual machine, create galaxy admin user and mount Cern VM file system inside the container.
+This role has been specifically developed to be used in the Laniakea project.
 
-A brief description of the role goes here.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This ansible role supports CentOS 7.
+
+Minimum ansible version: 2.1.2.0
+
+Minimum Galaxy docker version: 18.01
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### Main variables ###
+ 
+``galaxy_instance_description``: set galaxy brand, **default** = "ELIXIR-IT"
+
+``export_dir``: directory that will contain the Galaxy directory, and docker_image directory were the docker images will be stored, **default** ="/export"
+
+``galaxy_flavor``: "\<owner>/\<docker\>:<docker_flag\>\", set the Galaxy Docker container, **default** = "bgruening/galaxy-stable:18.05"
+
+### Galaxy admin user creation ###
+
+``GALAXY_ADMIN_PASSWORD``: Galaxy administrator password 
+
+``GALAXY_ADMIN_API_KEY``: Galaxy administrator API KEY 
+
+``GALAXY_ADMIN_EMAIL``: Galaxy administrator email
+
+### Galaxy CVMFS role variable ###
+
+``repository_name``: name of the cvmfs repository to mount inside the Docker container default = "elixir-italy.covacs.refdata"
+
+``server_url``: "<IP ADDRESS OR URL STRATUM 0 OR STRATUM 1 SERVER>", **default** = "90.147.75.251"
+
+``cvmfs_server_url``: "http://{{ server_url }}/cvmfs/{{ repository_name }}"
+
+``cvmfs_public_key_path``: path were the cvmfs keys will be downloaded, **default** =  "/etc/cvmfs/keys"
+
+``cvmfs_public_key``: "{{ repository_name }}.pub"
+
+``proxy_url``: "\<PROXY SERVER OR DIRECT>", **default** = DIRECT
+
+``proxy_port``: 80
+
+``cvmfs_http_proxy``: "http://{{ proxy_url }}:{{ proxy_port }}"
+
+``cvmfs_mountpoint``: mountpoint of the docker for the CVMFS server, **default** = "/cvmfs"
+
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+``role: indigo-dc.docker``
+
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+    - name: minimum playbook
+      hosts: localhost
       roles:
-         - { role: username.rolename, x: 42 }
+        - { role: galaxycloud_docker }
+
 
 License
 -------
 
-BSD
+Apache Licence v2
 
-Author Information
-------------------
+http://www.apache.org/licenses/LICENSE-2.0
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+Reference
+---------
+Galaxy docker: https://github.com/bgruening/docker-galaxy-stable
+
+Official cvmfs documentation: http://cvmfs.readthedocs.io/en/stable/cpt-repo.html
+
+
+

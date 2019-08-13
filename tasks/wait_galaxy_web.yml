@@ -9,8 +9,8 @@
     status_code: 200
   register: result 
   until: result.status == 200
-  retries: 2000 
-  delay: 1
+  retries: 300 
+  delay: 60
 
 #______________________________________
 # mount cvmfs repository selected running cvmfs_config in the container
@@ -20,3 +20,12 @@
   become_user: root
   become_method: sudo
   shell: docker exec galaxydocker cvmfs_config probe
+
+#______________________________________
+#restart container in case of reboot
+
+- name: update container in order to restart at reboot
+  become: true
+  become_user: root
+  become_method: sudo
+  shell: docker update --restart=always galaxydocker
