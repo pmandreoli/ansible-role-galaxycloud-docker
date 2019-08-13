@@ -41,3 +41,11 @@
   become_user: root
   command: docker exec galaxydocker /bin/bash -c ". $GALAXY_VIRTUAL_ENV/bin/activate && GALAXY_CONFIG_FILE={{ galaxy_config_path }}/galaxy.yml && python /usr/local/bin/create_galaxy_user.py --user {{ GALAXY_ADMIN_EMAIL }} --password {{ GALAXY_ADMIN_PASSWORD }} -c  $GALAXY_CONFIG_FILE  --key {{ GALAXY_ADMIN_API_KEY }} && supervisorctl restart galaxy:"
   when: galaxyconf.stat.exists == True
+
+#______________________________________
+#restart galaxydocker in case of reboot
+
+- name: update docker 
+  become_user: root
+  command: docker update --restart=always galaxydocker
+
