@@ -4,8 +4,6 @@
   set_fact:
     galaxy_local_config_path: "{{ galaxy_config_path | replace('/export','/export/galaxy') }}"
 
-
-
 #______________________________________
 #modify galaxy.yml file in order to set administrator credentials
 
@@ -35,7 +33,7 @@
     - { regexp: ' #require_login: False', line: '  require_login: {{ require_login }}' }
     - { regexp: ' #allow_user_creation: true', line: '  allow_user_creation: {{ allow_user_creation }}' }
     - { regexp: ' #allow_user_impersonation: false', line: '  allow_user_impersonation: {{ allow_user_impersonation }}' }
-    - { regexp: ' #new_user_dataset_access_role_default_private: false', line: '  new_user_dataset_access_role_default_private {{ new_user_dataset_access_role_default_private }}' }
+    - { regexp: ' #new_user_dataset_access_role_default_private: false', line: '  new_user_dataset_access_role_default_private: {{ new_user_dataset_access_role_default_private }}' }
   when: galaxyconf.stat.exists == True
 
 #_____________________________________
