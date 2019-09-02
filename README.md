@@ -66,6 +66,9 @@ Example Playbook
       hosts: localhost
       roles:
         - { role: galaxycloud_docker }
+      vars:
+        GALAXY_ADMIN_EMAIL: "<your@email>"
+
 
 
 License
