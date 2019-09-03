@@ -25,6 +25,7 @@
     env:
       GALAXY_CONFIG_BRAND: "{{ galaxy_instance_description }}"
       GALAXY_CONFIG_ADMIN_USERS: "{{ GALAXY_ADMIN_EMAIL }}" 
+      GALAXY_CONFIG_FILE: /export/galaxy-central/config/galaxy.yml 
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
   when: ansible_version.full >= "2.4.0.0"
@@ -43,6 +44,7 @@
     env:
       GALAXY_CONFIG_BRAND: "{{ galaxy_instance_description }}"
       GALAXY_CONFIG_ADMIN_USERS: "{{ GALAXY_ADMIN_EMAIL }}" 
+      GALAXY_CONFIG_FILE: /export/galaxy-central/config/galaxy.yml 
     volumes:
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
   when: ansible_version.full < "2.4.0.0"
