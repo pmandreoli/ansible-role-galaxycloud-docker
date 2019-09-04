@@ -1,47 +1,10 @@
 ---
 
-- name: Get docker config path number only for comparison
-  set_fact:
-    galaxy_local_config_path: "{{ galaxy_config_path | replace('/export','/export/galaxy') }}"
-
-#______________________________________
-#modify galaxy.yml file in order to set administrator credentials
-
-- name: stat docker_sample
-  stat: 
-    path: "{{ galaxy_local_config_path }}/galaxy.yml.docker_sample"
-  register: galaxydockerconf
-
-
-- name: rename galaxy-yml
-  command: mv {{ galaxy_local_config_path }}/galaxy.yml.docker_sample {{ galaxy_local_config_path }}/galaxy.yml
-  when: galaxydockerconf.stat.exists == True
-
-- name: stat galaxy-yml
-  stat:
-    path: "{{ galaxy_local_config_path }}/galaxy.yml"
-  register: galaxyconf
-
-- name: Set galaxyYML parameters
-  lineinfile:
-    dest: "{{ galaxy_local_config_path }}/galaxy.yml"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-  with_items:
-    - { regexp: ' #admin_users: null', line: '  admin_users: {{ GALAXY_ADMIN_EMAIL }}' }
-    - { regexp: ' #brand: null', line: '  brand: {{ galaxy_instance_description }}' }
-    - { regexp: ' #require_login: False', line: '  require_login: {{ require_login }}' }
-    - { regexp: ' #allow_user_creation: true', line: '  allow_user_creation: {{ allow_user_creation }}' }
-    - { regexp: ' #allow_user_impersonation: false', line: '  allow_user_impersonation: {{ allow_user_impersonation }}' }
-    - { regexp: ' #new_user_dataset_access_role_default_private: false', line: '  new_user_dataset_access_role_default_private: {{ new_user_dataset_access_role_default_private }}' }
-  when: galaxyconf.stat.exists == True
-
 #_____________________________________
 # restart galaxy inside docker using supervisorctl
 
 - name: restart galaxy and user creation 
   become_user: root
   command: docker exec galaxydocker /bin/bash -c ". $GALAXY_VIRTUAL_ENV/bin/activate && python /usr/local/bin/create_galaxy_user.py --user {{ GALAXY_ADMIN_EMAIL }} --password {{ GALAXY_ADMIN_PASSWORD }} -c  $GALAXY_CONFIG_FILE  --key {{ GALAXY_ADMIN_API_KEY }} && supervisorctl restart galaxy:"
-  when: galaxyconf.stat.exists == True
 
 

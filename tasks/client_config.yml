@@ -18,3 +18,10 @@
   get_url:
     url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_keys/{{ repository_name }}.pub'
     dest: '/etc/cvmfs/keys/{{ repository_name }}.pub'
+
+- name: set galaxy-yml configuration files
+  template:
+    src: '{{ item.template }}'
+    dest: '{{ item.dest }}'
+  with_items:
+    - { template: galaxy.yml.j2, dest: /export/galaxy.yml }
