@@ -6,7 +6,6 @@
 - include: dir_creation.yml
 
 - include: client_config.yml 
-  when: repository_name != "data.galaxyproject.org"
 
 - include: prerequisites.yml
 
