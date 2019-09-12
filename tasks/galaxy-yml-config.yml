@@ -38,7 +38,15 @@
   command: docker exec galaxydocker /bin/bash -c "wget https://raw.githubusercontent.com/indigo-dc/Galaxy-flavors-recipes/master/galaxy-CoVaCS/galaxy-CoVaCS-workflows/Galaxy-Workflow-CoVaCS.ga -O $GALAXY_HOME/workflows/Galaxy-Workflow-CoVaCS.ga && wget https://raw.githubusercontent.com/indigo-dc/Galaxy-flavors-recipes/master/galaxy-CoVaCS/galaxy-CoVaCS-workflows/Galaxy-Workflow-covacs_wf_Select_variant.ga -O $GALAXY_HOME/workflows/Galaxy-Workflow-covacs_wf_Select_variant.ga "
   when:
     - testdir|success
-    - galaxy_flavor == 'covacsnwf2:19.01' 
+    - galaxy_flavor.find("covacs") != -1
+
+- name: download wf
+  become_user: root
+  command: docker exec galaxydocker /bin/bash -c "wget https://raw.githubusercontent.com/indigo-dc/Galaxy-flavors-recipes/master/galaxy-GDC_Somatic_Variant/galaxy-GDC_Somatic_Variant-workflows/Galaxy-Workflow-GDC_WF.ga -O $GALAXY_HOME/workflows/Galaxy-Workflow-GDC_WF.ga "
+  when:
+    - testdir|success
+    - galaxy_flavor.find("gdc") != -1
+
 #_____________________________________
 #share workflow with admin user
 
