@@ -1,13 +1,6 @@
 ---
 
 #______________________________________
-# set galaxy_version_number from  GALAXY_VERSION variable
-
-#- name: Get Galaxy version number only for comparison
-#  set_fact:
-#    galaxy_version_number: "{{ GALAXY_VERSION | replace('release_','') }}"
-
-#______________________________________
 # run galaxy docker mounting /export dir and cvmfs config files
 # both for ansible version >2.4 and <2.4
 

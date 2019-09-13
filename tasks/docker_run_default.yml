@@ -1,13 +1,6 @@
 ---
 
 #______________________________________
-# set galaxy_docker_flag from  GALAXY_VERSION variable
-
-#- name: Get Galaxy version number for docker flag
-#  set_fact:
-#    galaxy_docker_flag: "{{ GALAXY_VERSION | replace('release_','') }}"
-
-#______________________________________
 # run galaxy docker mounting /export dir and cvmfs config files
 # both for ansible version >2.4 and <2.4
 

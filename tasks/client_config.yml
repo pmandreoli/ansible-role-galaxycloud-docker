@@ -10,6 +10,7 @@
     - { template: default.local.j2, dest: /etc/cvmfs/default.local }
     - { template: repository.conf.j2, dest: '/etc/cvmfs/config.d/{{ repository_name }}.conf' }
   when: repository_name != "data.galaxyproject.org"
+
 #______________________________________
 # download the required key.pub of the selected repository from github
 # and paste it in the cvmfs key directory
@@ -19,6 +20,9 @@
     url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_keys/{{ repository_name }}.pub'
     dest: '/etc/cvmfs/keys/{{ repository_name }}.pub'
   when: repository_name != "data.galaxyproject.org"
+
+#_____________________________________
+#modification of galaxy.yml file to be mounted in the docker
 
 - name: set galaxy-yml configuration files
   template:
