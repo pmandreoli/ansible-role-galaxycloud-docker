@@ -2,6 +2,16 @@
 #______________________________________
 # set cvmfs configuration files using j2 templates
 
+- name: set server url
+  set_fact:
+    server_url: '90.147.102.186'
+  when: repository_name == "elixir-italy.galaxy.refdata"
+
+- name: set server url
+  set_fact:
+    server_url: '90.147.75.251'
+  when: repository_name == "elixir-italy.covacs.refdata"
+
 - name: set cvmfs configuration files
   template:
     src: '{{ item.template }}'
