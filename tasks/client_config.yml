@@ -2,15 +2,11 @@
 #______________________________________
 # set cvmfs configuration files using j2 templates
 
-- name: set server url
-  set_fact:
-    server_url: '90.147.102.186'
-  when: repository_name == "elixir-italy.galaxy.refdata"
-
-- name: set server url
-  set_fact:
-    server_url: '90.147.75.251'
-  when: repository_name == "elixir-italy.covacs.refdata"
+- name: download repository public key from github
+  get_url:
+    url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_config_files/{{ repository_name }}.conf'
+    dest: '/etc/cvmfs/config.d'
+  when: repository_name != "data.galaxyproject.org"
 
 - name: set cvmfs configuration files
   template:
@@ -18,7 +14,6 @@
     dest: '{{ item.dest }}'
   with_items:
     - { template: default.local.j2, dest: /etc/cvmfs/default.local }
-    - { template: repository.conf.j2, dest: '/etc/cvmfs/config.d/{{ repository_name }}.conf' }
   when: repository_name != "data.galaxyproject.org"
 
 #______________________________________
