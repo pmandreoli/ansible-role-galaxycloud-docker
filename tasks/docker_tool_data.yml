@@ -1,0 +1,11 @@
+---
+
+#_________________________________
+# download tool_data_table
+
+- name: download tool data table
+  get_url:
+    url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/{{ repository_name }}/location/tool_data_table_conf.xml'
+    dest: '/etc/galaxy'
+  when: repository_name != "data.galaxyproject.org"
+

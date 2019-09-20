@@ -11,6 +11,8 @@
 
 - include: docker_fix.yml
 
+- include: docker_tool_data.yml
+
 - include: docker_run.yml
   when: repository_name != "data.galaxyproject.org"
 
