@@ -20,6 +20,7 @@
       - "/etc/galaxy/delete_galaxy_user.py:/etc/galaxy/delete_galaxy_user.py:rw"
       - "/etc/galaxy/galaxy.yml:/etc/galaxy/galaxy.yml:rw"
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
+      - "/etc/galaxy/tool_data_tables:/etc/galaxy/tool_data_tables:rw"
   when: ansible_version.full >= "2.4.0.0"
 
 - name: "installation of docker-py and galaxy docker run run for default cvmfs configuration :TASK specific for ansible <2.4"
@@ -38,4 +39,5 @@
       - "/etc/galaxy/delete_galaxy_user.py:/etc/galaxy/delete_galaxy_user.py/:rw"
       - "/etc/galaxy/galaxy.yml:/etc/galaxy/galaxy.yml:rw"
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
+      - "/etc/galaxy/tool_data_tables:/etc/galaxy/tool_data_tables:rw"
   when: ansible_version.full < "2.4.0.0"
