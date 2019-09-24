@@ -5,6 +5,8 @@
 
 - include: dir_creation.yml
 
+- include: docker_tool_data.yml
+
 - include: client_config.yml 
 
 - include: prerequisites.yml
