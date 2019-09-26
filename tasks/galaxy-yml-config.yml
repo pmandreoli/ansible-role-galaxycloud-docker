@@ -1,45 +1,40 @@
 ---
 
-- name: Get docker config path number only for comparison
-  set_fact:
-    galaxy_local_config_path: "{{ galaxy_config_path | replace('/export','/export/galaxy') }}"
-
-
-
-#______________________________________
-#modify galaxy.yml file in order to set administrator credentials
-
-- name: stat docker_sample
-  stat: 
-    path: "{{ galaxy_local_config_path }}/galaxy.yml.docker_sample"
-  register: galaxydockerconf
-
-
-- name: rename galaxy-yml
-  command: mv {{ galaxy_local_config_path }}/galaxy.yml.docker_sample {{ galaxy_local_config_path }}/galaxy.yml
-  when: galaxydockerconf.stat.exists == True
-
-- name: stat galaxy-yml
-  stat:
-    path: "{{ galaxy_local_config_path }}/galaxy.yml"
-  register: galaxyconf
-
-- name: Set galaxyYML parameters
-  lineinfile:
-    dest: "{{ galaxy_local_config_path }}/galaxy.yml"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-  with_items:
-    - { regexp: ' #admin_users: null', line: '  admin_users: {{ GALAXY_ADMIN_EMAIL }}' }
-    - { regexp: ' #brand: null', line: '  brand: {{ galaxy_instance_description }}' }
-  when: galaxyconf.stat.exists == True 
-
 #_____________________________________
 # restart galaxy inside docker using supervisorctl
 
-- name: restart galaxy and user creation 
+- name: user creation 
   become_user: root
-  command: docker exec galaxydocker /bin/bash -c ". $GALAXY_VIRTUAL_ENV/bin/activate && GALAXY_CONFIG_FILE={{ galaxy_config_path }}/galaxy.yml && python /usr/local/bin/create_galaxy_user.py --user {{ GALAXY_ADMIN_EMAIL }} --password {{ GALAXY_ADMIN_PASSWORD }} -c  $GALAXY_CONFIG_FILE  --key {{ GALAXY_ADMIN_API_KEY }} && supervisorctl restart galaxy:"
-  when: galaxyconf.stat.exists == True
+  command: docker exec galaxydocker /bin/bash -c ". $GALAXY_VIRTUAL_ENV/bin/activate && python /usr/local/bin/create_galaxy_user.py --user {{ GALAXY_ADMIN_EMAIL }} --password {{ GALAXY_ADMIN_PASSWORD }} -c $GALAXY_CONFIG_FILE  --key {{ GALAXY_ADMIN_API_KEY }} && deactivate "
 
+#_____________________________________
+#install pip module needed for delete_user python script
+
+- name: pip module install 
+  become_user: root
+  command: docker exec galaxydocker /bin/bash -c "pip install social-auth-core SQLAlchemy routes webob paste bleach babel psycopg2-binary numpy boltons pyyaml "
+
+#_____________________________________
+#run delete user python script
+
+- name: delete-user 
+  become_user: root
+  command: docker exec galaxydocker /bin/bash -c "python /etc/galaxy/delete_galaxy_user.py -u admin@galaxy.org -c /etc/galaxy/galaxy.yml "
+
+#_____________________________________
+#test if there is the wf directory
+
+- name: test workflow directory
+  become_user: root
+  command: docker exec galaxydocker /bin/bash -c "test -d /home/galaxy/workflows "
+  register: testdir
+  ignore_errors: yes
+
+#_____________________________________
+#share workflow with admin user
+
+- name: share wf
+  become_user: root
+  command: docker exec galaxydocker /bin/bash -c ". $GALAXY_VIRTUAL_ENV/bin/activate && workflow-install --workflow_path $GALAXY_HOME/workflows/ -g http://localhost:80 -u {{ GALAXY_ADMIN_EMAIL }} -p {{ GALAXY_ADMIN_PASSWORD }} "
+  when: testdir|success
 

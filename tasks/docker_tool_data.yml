@@ -1,0 +1,70 @@
+---
+
+#_________________________________
+# download tool_data_table
+- name: dir tool_data_tabel creation
+  become_user: root
+  file:
+    path: "/etc/galaxy/tool_data_tables"
+    state: directory
+
+#_________________________________
+# download tool_data_tables for specific flavour
+- name: download tool data table for covacs and GDC
+  get_url:
+    url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/{{ refdata_cvmfs_repository_name }}/location/tool_data_table_conf.xml'
+    dest: '/etc/galaxy/tool_data_tables'
+  when: refdata_cvmfs_repository_name != "data.galaxyproject.org"
+
+#_________________________________
+# download additional tool_data_tables for GDC
+- name: download additional tool_data_table for GDC
+  get_url:
+    url: 'https://raw.githubusercontent.com/pmandreoli/GDC_tool_data_tables/master/{{ refdata_cvmfs_repository_name }}/gdc_tool_data_table_conf.xml'
+    dest: '/etc/galaxy/tool_data_tables'
+  when: 
+    - "'galaxy-gdc_somatic_variant' in galaxy_flavor"
+    - refdata_cvmfs_repository_name != "elixir-italy.covacs.refdata" 
+
+#_________________________________
+# set tool_data_table_conf for covacs and gdc with repo elixir 
+- name: set default tool_data covacs and gdc with elixir-cvmfs
+  set_fact: 
+    tool_data: '/etc/galaxy/tool_data_tables/tool_data_table_conf.xml'
+  when: 
+    - ('galaxy-gdc_somatic_variant' in galaxy_flavor) or ('galaxy-covacs' in galaxy_flavor)
+    - refdata_cvmfs_repository_name != "data.galaxyproject.org" 
+   
+#_________________________________
+# set tool_data_table_conf in case of GDC flavor and data.galaxyproject.org cvmfs
+- name: set case gdc and repo data.galaxyproject.refdata
+  set_fact: 
+    tool_data: '/cvmfs/{{ refdata_cvmfs_repository_name }}/byhand/location/tool_data_table_conf.xml'
+  when: 
+    - "'galaxy-gdc_somatic_variant' in galaxy_flavor"
+    - refdata_cvmfs_repository_name == "data.galaxyproject.org" 
+
+#_________________________________
+# set default tool_data_table_conf in case of not laniakea flavor
+- name: set default not gdc or covacs
+  set_fact: 
+    tool_data: '/etc/galaxy/tool_data_table_conf.xml'
+  when:
+    - ('galaxy-gdc_somatic_variant' not in galaxy_flavor) or ('galaxy-covacs' not in galaxy_flavor)
+    - "'laniakeacloud' not in galaxy_flavor"
+
+#_________________________________
+# set  additional_tool_data_table_conf in case of GDC flavor
+- name: set tool_data_table if GDC 
+  set_fact:
+    additional_tool_data: ',/etc/galaxy/tool_data_tables/gdc_tool_data_table_conf.xml'            
+  when: "'galaxy-gdc_somatic_variant' in galaxy_flavor"
+
+#_________________________________
+# set  additional_tool_data_table_conf to null in case of not GDC flavor
+- name: override additional_tool_data to n 
+  set_fact:
+    additional_tool_data:             
+  when: '"galaxy-gdc_somatic_variant" not in galaxy_flavor'
+
+
