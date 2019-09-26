@@ -12,19 +12,19 @@
 # download tool_data_tables for specific flavour
 - name: download tool data table for covacs and GDC
   get_url:
-    url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/{{ repository_name }}/location/tool_data_table_conf.xml'
+    url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/{{ refdata_cvmfs_repository_name }}/location/tool_data_table_conf.xml'
     dest: '/etc/galaxy/tool_data_tables'
-  when: repository_name != "data.galaxyproject.org"
+  when: refdata_cvmfs_repository_name != "data.galaxyproject.org"
 
 #_________________________________
 # download additional tool_data_tables for GDC
 - name: download additional tool_data_table for GDC
   get_url:
-    url: 'https://raw.githubusercontent.com/pmandreoli/GDC_tool_data_tables/master/{{ repository_name }}/gdc_tool_data_table_conf.xml'
+    url: 'https://raw.githubusercontent.com/pmandreoli/GDC_tool_data_tables/master/{{ refdata_cvmfs_repository_name }}/gdc_tool_data_table_conf.xml'
     dest: '/etc/galaxy/tool_data_tables'
   when: 
     - "'galaxy-gdc_somatic_variant' in galaxy_flavor"
-    - "'elixir-italy.covacs.refdata' not in repository_name"
+    - refdata_cvmfs_repository_name != "elixir-italy.covacs.refdata" 
 
 #_________________________________
 # set tool_data_table_conf for covacs and gdc with repo elixir 
@@ -33,16 +33,16 @@
     tool_data: '/etc/galaxy/tool_data_tables/tool_data_table_conf.xml'
   when: 
     - ('galaxy-gdc_somatic_variant' in galaxy_flavor) or ('galaxy-covacs' in galaxy_flavor)
-    - repository_name != "data.galaxyproject.org" 
+    - refdata_cvmfs_repository_name != "data.galaxyproject.org" 
    
 #_________________________________
 # set tool_data_table_conf in case of GDC flavor and data.galaxyproject.org cvmfs
 - name: set case gdc and repo data.galaxyproject.refdata
   set_fact: 
-    tool_data: '/cvmfs/{{ repository_name }}/byhand/location/tool_data_table_conf.xml'
+    tool_data: '/cvmfs/{{ refdata_cvmfs_repository_name }}/byhand/location/tool_data_table_conf.xml'
   when: 
     - "'galaxy-gdc_somatic_variant' in galaxy_flavor"
-    - repository_name == "data.galaxyproject.org" 
+    - refdata_cvmfs_repository_name == "data.galaxyproject.org" 
 
 #_________________________________
 # set default tool_data_table_conf in case of not laniakea flavor

@@ -30,4 +30,4 @@
     - { path: /etc/cvmfs/default.d , state: directory }
     - { path: /etc/cvmfs/keys , state: directory }
     - { path: /etc/cvmfs/config.d , state: directory }
-  when: repository_name != "data.galaxyproject.org"
+  when: refdata_cvmfs_repository_name != "data.galaxyproject.org"

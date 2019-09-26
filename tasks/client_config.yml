@@ -4,9 +4,9 @@
 
 - name: download repository public key from github
   get_url:
-    url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_config_files/{{ repository_name }}.conf'
+    url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_config_files/{{ refdata_cvmfs_repository_name }}.conf'
     dest: '/etc/cvmfs/config.d'
-  when: repository_name != "data.galaxyproject.org"
+  when: refdata_cvmfs_repository_name != "data.galaxyproject.org"
 
 - name: set cvmfs configuration files
   template:
@@ -14,7 +14,7 @@
     dest: '{{ item.dest }}'
   with_items:
     - { template: default.local.j2, dest: /etc/cvmfs/default.local }
-  when: repository_name != "data.galaxyproject.org"
+  when: refdata_cvmfs_repository_name != "data.galaxyproject.org"
 
 #______________________________________
 # download the required key.pub of the selected repository from github
@@ -22,9 +22,9 @@
 
 - name: download repository public key from github
   get_url:
-    url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_keys/{{ repository_name }}.pub'
-    dest: '/etc/cvmfs/keys/{{ repository_name }}.pub'
-  when: repository_name != "data.galaxyproject.org"
+    url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_keys/{{ refdata_cvmfs_repository_name }}.pub'
+    dest: '/etc/cvmfs/keys/{{ refdata_cvmfs_repository_name }}.pub'
+  when: refdata_cvmfs_repository_name != "data.galaxyproject.org"
 
 #_____________________________________
 #modification of galaxy.yml file to be mounted in the docker
