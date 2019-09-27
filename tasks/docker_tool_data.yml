@@ -26,6 +26,12 @@
     - "'galaxy-gdc_somatic_variant' in galaxy_flavor"
     - refdata_cvmfs_repository_name == "data.galaxyproject.org" 
 
+
+#_________________________________
+# set default tool_data_table_conf in case of not laniakea flavor
+- name: set default tool_data_table_conf
+  set_fact: 
+    tool_data: '/etc/galaxy/tool_data_table_conf.xml'
 #_________________________________
 # set tool_data_table_conf for covacs and gdc with repo elixir 
 - name: set default tool_data covacs and gdc with elixir-cvmfs
@@ -43,30 +49,10 @@
 
 #_________________________________
 # set tool_data_table_conf in case of GDC flavor and data.galaxyproject.org cvmfs
-- name: set tool_data_table_conf in case of gdc flavor and cvmfs repository data.galaxyproject.refdata
+- name: set tool_data_table_conf and additional_tool_data_table_conf in case of gdc flavor and cvmfs repository data.galaxyproject.refdata
   set_fact: 
     tool_data: '/cvmfs/{{ refdata_cvmfs_repository_name }}/byhand/location/tool_data_table_conf.xml'
     additional_tool_data: ',/etc/galaxy/tool_data_tables/gdc_tool_data_table_conf.xml'            
   when: 
     - "'galaxy-gdc_somatic_variant' in galaxy_flavor"
     - refdata_cvmfs_repository_name == "data.galaxyproject.org" 
-
-#_________________________________
-# set default tool_data_table_conf in case of not laniakea flavor
-- name: set default tool_data_table_conf when flavor is not gdc or covacs
-  set_fact: 
-    tool_data: '/etc/galaxy/tool_data_table_conf.xml'
-  when:
-    - ('galaxy-gdc_somatic_variant' not in galaxy_flavor) or ('galaxy-covacs' not in galaxy_flavor)
-    - "'laniakeacloud' not in galaxy_flavor"
-
-      ##_________________________________
-      ## set  additional_tool_data_table_conf in case of GDC flavor
-      #- name: set tool_data_table if GDC and data.galaxyproject.org 
-      #  set_fact:
-      #    additional_tool_data: ',/etc/galaxy/tool_data_tables/gdc_tool_data_table_conf.xml'            
-      #  when: 
-      #    - "'galaxy-gdc_somatic_variant' in galaxy_flavor"
-      #    - refdata_cvmfs_repository_name == "data.galaxyproject.org" 
-      #
-
