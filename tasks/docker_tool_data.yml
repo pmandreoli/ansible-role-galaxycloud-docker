@@ -27,12 +27,10 @@
 
 #_________________________________
 # set tool_data_table_conf for covacs and gdc with repo elixir 
-- name: set tool_data_table_conf covacs and gdc with elixir-cvmfs
+- name: set tool_data_table_conf in case of elixir-cvmfs
   set_fact: 
     tool_data_table_conf: '/etc/galaxy/tool_data_tables/tool_data_table_conf.xml'
-  when: 
-    - ('galaxy-gdc_somatic_variant' in galaxy_flavor) or ('galaxy-covacs' in galaxy_flavor)
-    - refdata_cvmfs_repository_name != "data.galaxyproject.org" 
+  when: refdata_cvmfs_repository_name != "data.galaxyproject.org" 
    
 #_________________________________
 # set tool_data_table_conf in case of GDC flavor and data.galaxyproject.org cvmfs
