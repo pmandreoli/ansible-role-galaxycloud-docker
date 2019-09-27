@@ -14,7 +14,7 @@
   get_url:
     url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/{{ refdata_cvmfs_repository_name }}/location/tool_data_table_conf.xml'
     dest: '/etc/galaxy/tool_data_tables'
-  ignore_error: true
+  ignore_errors: true
 #_________________________________
 # download additional tool_data_tables for GDC
 - name: download additional tool_data_table for GDC
