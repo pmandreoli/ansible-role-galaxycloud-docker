@@ -68,8 +68,6 @@
 - name: override additional_tool_data to n 
   set_fact:
     additional_tool_data:             
-  when:
-    -  '"galaxy-gdc_somatic_variant" not in galaxy_flavor'
-    - refdata_cvmfs_repository_name != "data.galaxyproject.org" 
+  when: refdata_cvmfs_repository_name != "data.galaxyproject.org" 
 
 
