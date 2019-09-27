@@ -10,7 +10,7 @@
 
 #_________________________________
 # download tool_data_tables for specific flavour
-- name: download tool data table for covacs and GDC
+- name: download tool data table for covacs and GDC with Elixir-cvmfs
   get_url:
     url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/{{ refdata_cvmfs_repository_name }}/location/tool_data_table_conf.xml'
     dest: '/etc/galaxy/tool_data_tables'
@@ -63,11 +63,13 @@
       #    - "'galaxy-gdc_somatic_variant' in galaxy_flavor"
       #    - refdata_cvmfs_repository_name == "data.galaxyproject.org" 
       #
-      ##_________________________________
-      ## set  additional_tool_data_table_conf to null in case of not GDC flavor
-      #- name: override additional_tool_data to n 
-      #  set_fact:
-      #    additional_tool_data:             
-      #  when: '"galaxy-gdc_somatic_variant" not in galaxy_flavor'
+##_________________________________
+#set  additional_tool_data_table_conf to null in case of not GDC flavor
+- name: override additional_tool_data to n 
+  set_fact:
+    additional_tool_data:             
+  when:
+    -  '"galaxy-gdc_somatic_variant" not in galaxy_flavor'
+    - refdata_cvmfs_repository_name != "data.galaxyproject.org" 
 
 
