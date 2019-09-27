@@ -35,6 +35,12 @@
     - ('galaxy-gdc_somatic_variant' in galaxy_flavor) or ('galaxy-covacs' in galaxy_flavor)
     - refdata_cvmfs_repository_name != "data.galaxyproject.org" 
    
+##_________________________________
+#set  additional_tool_data_table_conf to null
+- name: set additional_tool_data to n 
+  set_fact:
+    additional_tool_data:             
+
 #_________________________________
 # set tool_data_table_conf in case of GDC flavor and data.galaxyproject.org cvmfs
 - name: set tool_data_table_conf in case of gdc flavor and cvmfs repository data.galaxyproject.refdata
@@ -63,11 +69,4 @@
       #    - "'galaxy-gdc_somatic_variant' in galaxy_flavor"
       #    - refdata_cvmfs_repository_name == "data.galaxyproject.org" 
       #
-##_________________________________
-#set  additional_tool_data_table_conf to null in case of not GDC flavor
-- name: override additional_tool_data to n 
-  set_fact:
-    additional_tool_data:             
-  when: refdata_cvmfs_repository_name != "data.galaxyproject.org" 
-
 
