@@ -6,7 +6,7 @@
 #GALAXY_CONFIG_FILE=/etc/galaxy/galaxy.yml 
 #GALAXY_CONFIG_JOB_CONFIG_FILE=/etc/galaxy/job_conf.xml 
 #GALAXY_CONFIG_JOB_METRICS_CONFIG_FILE=/etc/galaxy/job_metrics_conf.xml 
-GALAXY_CONFIG_TOOL_DATA_TABLE_CONFIG_PATH={{ tool_data }}{{ additional_tool_data }}  
+GALAXY_CONFIG_TOOL_DATA_TABLE_CONFIG_PATH={{ tool_data_table_conf }}
 #GALAXY_CONFIG_WATCH_TOOL_DATA_DIR=True 
 #GALAXY_CONFIG_TOOL_DEPENDENCY_DIR=/export/tool_deps 
 #GALAXY_CONFIG_TOOL_PATH=/export/galaxy-central/tools 
@@ -37,7 +37,7 @@ GALAXY_DEFAULT_ADMIN_KEY=
 #LANG=en_US.UTF-8 
 #GALAXY_CONDA_PREFIX=/export/tool_deps/_conda 
 #GALAXY_CONFIG_DATABASE_CONNECTION=postgresql://galaxy:galaxy@localhost:5432/galaxy?client_encoding=utf8 
-GALAXY_CONFIG_ADMIN_USERS= {{  GALAXY_ADMIN_EMAIL }}
+GALAXY_CONFIG_ADMIN_USERS= {{ GALAXY_ADMIN_EMAIL }}
 #GALAXY_CONFIG_MASTER_API_KEY= {{ GALAXY_ADMIN_API_KEY }} 
 GALAXY_CONFIG_BRAND= {{ galaxy_instance_description }}
 #GALAXY_CONFIG_STATIC_ENABLED=False 
