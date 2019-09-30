@@ -18,7 +18,6 @@
     env_file: "/etc/galaxy/.mygalaxyenv"
     volumes:
       - "/etc/galaxy/delete_galaxy_user.py:/etc/galaxy/delete_galaxy_user.py:rw"
-        #      - "/etc/galaxy/galaxy.yml:/etc/galaxy/galaxy.yml:rw"
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
       - "/etc/cvmfs/keys/{{ refdata_cvmfs_repository_name }}.pub:/etc/cvmfs/keys/{{ refdata_cvmfs_repository_name }}.pub:rw"
       - "/etc/cvmfs/default.local:/etc/cvmfs/default.local:rw"
@@ -40,7 +39,6 @@
     env_file: "/etc/galaxy/.mygalaxyenv"
     volumes:
       - "/etc/galaxy/delete_galaxy_user.py:/etc/galaxy/delete_galaxy_user.py:rw"
-        #      - "/etc/galaxy/galaxy.yml:/etc/galaxy/galaxy.yml:rw"
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
       - "/etc/cvmfs/keys/{{ refdata_cvmfs_repository_name }}.pub:/etc/cvmfs/keys/{{ refdata_cvmfs_repository_name }}.pub:rw"
       - "/etc/cvmfs/default.local:/etc/cvmfs/default.local:rw"

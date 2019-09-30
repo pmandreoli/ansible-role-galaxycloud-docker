@@ -27,13 +27,12 @@
   when: refdata_cvmfs_repository_name != "data.galaxyproject.org"
 
 #_____________________________________
-#modification of galaxy.yml file to be mounted in the docker
+#env file and script for user deletion that will be mounted in the docker
 
-- name: set test no galaxy.yml
+- name: set env file and delete galaxy-user
   template:
     src: '{{ item.template }}'
     dest: '{{ item.dest }}'
   with_items:
-          #    - { template: galaxy.yml.j2, dest: /etc/galaxy/galaxy.yml }
     - { template: mygalaxyenv.j2, dest: /etc/galaxy/.mygalaxyenv }
     - { template: delete_galaxy_user.py.j2, dest: /etc/galaxy/delete_galaxy_user.py } 
