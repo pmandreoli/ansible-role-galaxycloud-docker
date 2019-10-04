@@ -1,8 +1,7 @@
 galaxycloud_docker
 =========
 
-Run [Galaxy Docker](https://github.com/bgruening/docker-galaxy-stable) container inside a Centos7 virtual machine, create galaxy admin user and mount Cern VM file system inside the container.
-This role has been specifically developed to be used in the Laniakea project in order to run specific container with different Cern VM file system.
+This role has been specifically developed to be used in the Laniakea project in order to run specific [Galaxy Docker](https://github.com/bgruening/docker-galaxy-stable) container inside a Centos7 virtual machine, creating Galaxy admin user and mounting specific Cern VM file system.
 
 
 
@@ -68,8 +67,7 @@ Role Variables
 Dependencies
 ------------
 
--  - { role:  [indigo-dc.docker](https://github.com/indigo-dc/ansible-role-docker), docker_config:  { "data-root": "{{ export_dir }}/docker_image", }}
-     install docker engine and store the docker images inside the export volume 
+role:  [indigo-dc.docker](https://github.com/indigo-dc/ansible-role-docker) : install docker engine and store the docker images inside the export volume 
 
 
 
@@ -97,7 +95,10 @@ Reference
 ---------
 Galaxy docker: https://github.com/bgruening/docker-galaxy-stable
 
+Laniakea project documentation: https://laniakea.readthedocs.io/en/latest/
+
 Official cvmfs documentation: http://cvmfs.readthedocs.io/en/stable/cpt-repo.html
+
 
 
 
