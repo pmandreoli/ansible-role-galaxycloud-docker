@@ -68,9 +68,8 @@ Role Variables
 Dependencies
 ------------
 
-- { role:  [indigo-dc.docker](https://github.com/indigo-dc/ansible-role-docker), docker_config:  { "data-root": "{{ export_dir }}/docker_image", }}
-
-that install docker engine and store the docker images inside the export volume 
+-  - { role:  [indigo-dc.docker](https://github.com/indigo-dc/ansible-role-docker), docker_config:  { "data-root": "{{ export_dir }}/docker_image", }}
+     install docker engine and store the docker images inside the export volume 
 
 
 
