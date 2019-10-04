@@ -8,11 +8,9 @@ This role has been specifically developed to be used in the Laniakea project in 
 Requirements
 ------------
 
-This ansible role supports CentOS 7.
+This ansible role supports CentOS 7 and Ubuntu 16.04 Xenial
 
 Minimum ansible version: 2.1.2.0
-
-Minimum Galaxy docker version: 18.01
 
 Role Variables
 --------------
@@ -57,11 +55,11 @@ Role Variables
 
 ### Role templates ###
 
-``default.local.j3``: config file for CVMFS repository that will be mounted on Docker
+``default.local.j2``: config file for CVMFS repository that will be mounted on Docker
 
-``delete_galaxy_user.py.j3``: python script run by the role in order to delete the default admin user
+``delete_galaxy_user.py.j2``: python script run by the role in order to delete the default admin user
 
-``mygalaxyenv.j3``: env file containing the environment variable needed to configure the galaxy docker
+``mygalaxyenv.j2``: env file containing the environment variable needed to configure the galaxy docker
 
 
 Dependencies
