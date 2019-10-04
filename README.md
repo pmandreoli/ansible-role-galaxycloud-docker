@@ -1,7 +1,9 @@
 galaxycloud_docker
 =========
-Run Galaxy Docker container inside a Centos7 virtual machine, create galaxy admin user and mount Cern VM file system inside the container.
-This role has been specifically developed to be used in the Laniakea project.
+
+Run [Galaxy Docker](https://github.com/bgruening/docker-galaxy-stable) container inside a Centos7 virtual machine, create galaxy admin user and mount Cern VM file system inside the container.
+This role has been specifically developed to be used in the Laniakea project in order to run specific container with different Cern VM file system.
+
 
 
 Requirements
@@ -23,6 +25,8 @@ Role Variables
 ``export_dir``: directory that will contain the Galaxy directory, and docker_image directory were the docker images will be stored, **default** ="/export"
 
 ``galaxy_flavor``: "\<owner>/\<docker\>:<docker_flag\>\", set the Galaxy Docker container, **default** = "bgruening/galaxy-stable:18.05"
+
+``tool_data_table_conf`` :  default path to tool_data_table_conf.xml file = '/etc/galaxy/tool_data_table_conf.xml' 
 
 ### Galaxy admin user creation ###
 
@@ -52,11 +56,22 @@ Role Variables
 
 ``cvmfs_mountpoint``: mountpoint of the docker for the CVMFS server, **default** = "/cvmfs"
 
+### Role templates ###
+
+``default.local.j3``: config file for CVMFS repository that will be mounted on Docker
+
+``delete_galaxy_user.py.j3``: python script run by the role in order to delete the default admin user
+
+``mygalaxyenv.j3``: env file containing the environment variable needed to configure the galaxy docker
+
 
 Dependencies
 ------------
 
-``role: indigo-dc.docker``
+- { role:  [indigo-dc.docker](https://github.com/indigo-dc/ansible-role-docker), docker_config:  { "data-root": "{{ export_dir }}/docker_image", }}
+
+that install docker engine and store the docker images inside the export volume 
+
 
 
 Example Playbook
