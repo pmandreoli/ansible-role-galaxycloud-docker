@@ -18,7 +18,6 @@
     env_file: "/etc/galaxy/.mygalaxyenv"
     volumes:
       - "/etc/galaxy/delete_galaxy_user.py:/etc/galaxy/delete_galaxy_user.py:rw"
-      - "/etc/galaxy/galaxy.yml:/etc/galaxy/galaxy.yml:rw"
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
       - "/etc/galaxy/tool_data_tables:/etc/galaxy/tool_data_tables:rw"
   when: ansible_version.full >= "2.4.0.0"
@@ -37,7 +36,6 @@
     env_file: "/etc/galaxy/.mygalaxyenv"
     volumes:
       - "/etc/galaxy/delete_galaxy_user.py:/etc/galaxy/delete_galaxy_user.py/:rw"
-      - "/etc/galaxy/galaxy.yml:/etc/galaxy/galaxy.yml:rw"
       - "{{ export_dir }}/galaxy:{{ export_dir }}/:rw"
       - "/etc/galaxy/tool_data_tables:/etc/galaxy/tool_data_tables:rw"
   when: ansible_version.full < "2.4.0.0"

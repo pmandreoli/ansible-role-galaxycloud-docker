@@ -1,17 +1,16 @@
 galaxycloud_docker
 =========
-Run Galaxy Docker container inside a Centos7 virtual machine, create galaxy admin user and mount Cern VM file system inside the container.
-This role has been specifically developed to be used in the Laniakea project.
+
+This role has been specifically developed to be used in the Laniakea project in order to run specific [Galaxy Docker](https://github.com/bgruening/docker-galaxy-stable) container inside a Centos7 virtual machine, creating Galaxy admin user and mounting specific Cern VM file system.
+
 
 
 Requirements
 ------------
 
-This ansible role supports CentOS 7.
+This ansible role supports CentOS 7 and Ubuntu 16.04 Xenial
 
 Minimum ansible version: 2.1.2.0
-
-Minimum Galaxy docker version: 18.01
 
 Role Variables
 --------------
@@ -23,6 +22,8 @@ Role Variables
 ``export_dir``: directory that will contain the Galaxy directory, and docker_image directory were the docker images will be stored, **default** ="/export"
 
 ``galaxy_flavor``: "\<owner>/\<docker\>:<docker_flag\>\", set the Galaxy Docker container, **default** = "bgruening/galaxy-stable:18.05"
+
+``tool_data_table_conf`` :  default path to tool_data_table_conf.xml file = '/etc/galaxy/tool_data_table_conf.xml' 
 
 ### Galaxy admin user creation ###
 
@@ -52,11 +53,20 @@ Role Variables
 
 ``cvmfs_mountpoint``: mountpoint of the docker for the CVMFS server, **default** = "/cvmfs"
 
+### Role templates ###
+
+``default.local.j2``: config file for CVMFS repository that will be mounted on Docker
+
+``delete_galaxy_user.py.j2``: python script run by the role in order to delete the default admin user
+
+``mygalaxyenv.j2``: env file containing the environment variable needed to configure the galaxy docker
+
 
 Dependencies
 ------------
 
-``role: indigo-dc.docker``
+role:  [indigo-dc.docker](https://github.com/indigo-dc/ansible-role-docker) : install docker engine and store the docker images inside the export volume 
+
 
 
 Example Playbook
@@ -83,7 +93,10 @@ Reference
 ---------
 Galaxy docker: https://github.com/bgruening/docker-galaxy-stable
 
+Laniakea project documentation: https://laniakea.readthedocs.io/en/latest/
+
 Official cvmfs documentation: http://cvmfs.readthedocs.io/en/stable/cpt-repo.html
+
 
 
 
