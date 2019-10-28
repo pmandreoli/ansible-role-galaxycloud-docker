@@ -1,14 +1,12 @@
-galaxycloud_docker
-=========
+indigo-dc.galaxycloud_docker
+============================
 
-This role has been specifically developed to be used in the Laniakea project in order to run specific [Galaxy Docker](https://github.com/bgruening/docker-galaxy-stable) container inside a Centos7 virtual machine, creating Galaxy admin user and mounting specific Cern VM file system.
-
-
+This role has been specifically developed to be used in the Laniakea project in order to run specific [Galaxy Docker](https://github.com/bgruening/docker-galaxy-stable) containers on a Centos7 (Ubuntu 16.04) virtual machine, creating Galaxy administrator user and mounting specific Cern VM file system.
 
 Requirements
 ------------
 
-This ansible role supports CentOS 7 and Ubuntu 16.04 Xenial
+This ansible role supports CentOS 7 and Ubuntu 16.04 Xenial.
 
 Minimum ansible version: 2.1.2.0
 
@@ -23,25 +21,25 @@ Role Variables
 
 ``galaxy_flavor``: "\<owner>/\<docker\>:<docker_flag\>\", set the Galaxy Docker container, **default** = "bgruening/galaxy-stable:18.05"
 
-``tool_data_table_conf`` :  default path to tool_data_table_conf.xml file = '/etc/galaxy/tool_data_table_conf.xml' 
+``tool_data_table_conf``:  default path to tool_data_table_conf.xml file = '/etc/galaxy/tool_data_table_conf.xml' 
 
 ### Galaxy admin user creation ###
 
-``GALAXY_ADMIN_PASSWORD``: Galaxy administrator password 
+``GALAXY_ADMIN_PASSWORD``: Galaxy administrator password.
 
-``GALAXY_ADMIN_API_KEY``: Galaxy administrator API KEY 
+``GALAXY_ADMIN_API_KEY``: Galaxy administrator API KEY.
 
-``GALAXY_ADMIN_EMAIL``: Galaxy administrator email
+``GALAXY_ADMIN_EMAIL``: Galaxy administrator email.
 
 ### Galaxy CVMFS role variable ###
 
 ``refdata_cvmfs_repository_name``: name of the cvmfs repository to mount inside the Docker container default = "elixir-italy.covacs.refdata"
 
-``server_url``: "<IP ADDRESS OR URL STRATUM 0 OR STRATUM 1 SERVER>", **default** = "90.147.75.251"
+``server_url``: "<IP address or URL of the STRATUM 0 or STRATUM 1 server>", **default** = "90.147.75.251"
 
 ``cvmfs_server_url``: "http://{{ server_url }}/cvmfs/{{ refdata_cvmfs_repository_name }}"
 
-``cvmfs_public_key_path``: path were the cvmfs keys will be downloaded, **default** =  "/etc/cvmfs/keys"
+``cvmfs_public_key_path``: url of the key to download, **default** =  "/etc/cvmfs/keys"
 
 ``cvmfs_public_key``: "{{ refdata_cvmfs_repository_name }}.pub"
 
@@ -55,19 +53,17 @@ Role Variables
 
 ### Role templates ###
 
-``default.local.j2``: config file for CVMFS repository that will be mounted on Docker
+``default.local.j2``: config file for CVMFS repository that will be mounted on Docker.
 
-``delete_galaxy_user.py.j2``: python script run by the role in order to delete the default admin user
+``delete_galaxy_user.py.j2``: python script run by the role in order to delete the default administrator user.
 
-``mygalaxyenv.j2``: env file containing the environment variable needed to configure the galaxy docker
+``mygalaxyenv.j2``: env file with the environment variables needed to configure the galaxy docker,
 
 
 Dependencies
 ------------
 
-role:  [indigo-dc.docker](https://github.com/indigo-dc/ansible-role-docker) : install docker engine and store the docker images inside the export volume 
-
-
+role:  [indigo-dc.docker](https://github.com/indigo-dc/ansible-role-docker) : install docker engine and store the docker images inside the external volume (/export).
 
 Example Playbook
 ----------------
@@ -96,7 +92,3 @@ Galaxy docker: https://github.com/bgruening/docker-galaxy-stable
 Laniakea project documentation: https://laniakea.readthedocs.io/en/latest/
 
 Official cvmfs documentation: http://cvmfs.readthedocs.io/en/stable/cpt-repo.html
-
-
-
-
