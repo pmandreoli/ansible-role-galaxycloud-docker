@@ -1,7 +1,17 @@
 indigo-dc.galaxycloud_docker
 ============================
 
-This role has been specifically developed to be used in the Laniakea project in order to run specific [Galaxy Docker](https://github.com/bgruening/docker-galaxy-stable) containers on a Centos7 (Ubuntu 16.04) virtual machine, creating Galaxy administrator user and mounting specific Cern VM file system.
+This role has been developed to be used in the Laniakea project in order to run the official [Galaxy Docker](https://github.com/bgruening/docker-galaxy-stable) containers and its flavours on a Centos7 (or Ubuntu 16.04) Virtual Machine, creating Galaxy administrator user and mounting specific CernVM file system.
+
+Galaxy customization
+--------------------
+
+- User administrator creation
+- Galaxy brand customization
+- Anonymous login disabled
+- Allow user creation
+- Allow user impersonation
+- CVMFS customization (default: data.galaxyproject.org)
 
 Requirements
 ------------
@@ -17,7 +27,7 @@ Role Variables
  
 ``galaxy_instance_description``: set galaxy brand, **default** = "ELIXIR-IT"
 
-``export_dir``: directory that will contain the Galaxy directory, and docker_image directory were the docker images will be stored, **default** ="/export"
+``export_dir``: directory hosting Galaxy database files and docker images, **default** ="/export"
 
 ``galaxy_flavor``: "\<owner>/\<docker\>:<docker_flag\>\", set the Galaxy Docker container, **default** = "bgruening/galaxy-stable:18.05"
 
