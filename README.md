@@ -31,7 +31,7 @@ Role Variables
 
 ``galaxy_flavor``: "\<owner>/\<docker\>:<docker_flag\>\", set the Galaxy Docker container, **default** = "bgruening/galaxy-stable:18.05"
 
-``tool_data_table_conf``:  default path to tool_data_table_conf.xml file = '/etc/galaxy/tool_data_table_conf.xml' 
+``tool_data_table_conf``: default path to tool_data_table_conf.xml file = '/etc/galaxy/tool_data_table_conf.xml' 
 
 ### Galaxy admin user creation ###
 
@@ -43,9 +43,9 @@ Role Variables
 
 ### Galaxy CVMFS role variable ###
 
-``refdata_cvmfs_repository_name``: name of the cvmfs repository to mount inside the Docker container default = "elixir-italy.covacs.refdata"
+``refdata_cvmfs_repository_name``: name of the CVMFS repository to mount on the Docker container, **default** = "elixir-italy.covacs.refdata"
 
-``server_url``: "<IP address or URL of the STRATUM 0 or STRATUM 1 server>", **default** = "90.147.75.251"
+``server_url``: IP address or URL of the STRATUM 0 or STRATUM 1 server, **default** = "90.147.75.251"
 
 ``cvmfs_server_url``: "http://{{ server_url }}/cvmfs/{{ refdata_cvmfs_repository_name }}"
 
@@ -53,27 +53,25 @@ Role Variables
 
 ``cvmfs_public_key``: "{{ refdata_cvmfs_repository_name }}.pub"
 
-``proxy_url``: "\<PROXY SERVER OR DIRECT>", **default** = DIRECT
+``proxy_url``: Proxy server or DIRECT, **default** = DIRECT
 
 ``proxy_port``: 80
 
 ``cvmfs_http_proxy``: "http://{{ proxy_url }}:{{ proxy_port }}"
 
-``cvmfs_mountpoint``: mountpoint of the docker for the CVMFS server, **default** = "/cvmfs"
+``cvmfs_mountpoint``: Docker mountpoint for the CVMFS server, **default** = "/cvmfs"
 
 ### Role templates ###
 
-``default.local.j2``: config file for CVMFS repository that will be mounted on Docker.
+``default.local.j2``: config file for CVMFS repository that will be mounted on the Galaxy Docker.
 
-``delete_galaxy_user.py.j2``: python script run by the role in order to delete the default administrator user.
-
-``mygalaxyenv.j2``: env file with the environment variables needed to configure the galaxy docker,
+``mygalaxyenv.j2``: env file with the environment variables needed to configure the Galaxy Docker.
 
 
 Dependencies
 ------------
 
-role:  [indigo-dc.docker](https://github.com/indigo-dc/ansible-role-docker) : install docker engine and store the docker images inside the external volume (/export).
+[indigo-dc.docker](https://github.com/indigo-dc/ansible-role-docker) : install Docker engine and store the docker images inside the external volume (/export).
 
 Example Playbook
 ----------------
