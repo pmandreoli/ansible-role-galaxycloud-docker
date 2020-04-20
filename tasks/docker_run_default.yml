@@ -12,7 +12,6 @@
     ports:
       - "80:80"
       - "21:21"
-      - "22:22"
     detach: yes
     privileged: yes
     env_file: "/etc/galaxy/.mygalaxyenv"
@@ -30,7 +29,6 @@
     ports:
       - "80:80"
       - "21:21"
-      - "22:22"
     detach: yes
     privileged: yes
     env_file: "/etc/galaxy/.mygalaxyenv"
