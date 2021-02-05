@@ -5,7 +5,7 @@
 
 - name: user creation 
   become_user: root
-  command: docker exec galaxydocker /bin/bash -c ". $GALAXY_VIRTUAL_ENV/bin/activate && python /usr/local/bin/create_galaxy_user.py --user {{ GALAXY_ADMIN_EMAIL }} --password {{ GALAXY_ADMIN_PASSWORD }} -c $GALAXY_CONFIG_FILE  --key {{ GALAXY_ADMIN_API_KEY }} && deactivate "
+  command: docker exec galaxydocker /bin/bash -c ". $GALAXY_VIRTUAL_ENV/bin/activate && python /usr/local/bin/create_galaxy_user.py --user {{ GALAXY_ADMIN_EMAIL }} --password {{ GALAXY_ADMIN_PASSWORD }} -c $GALAXY_CONFIG_FILE  --key {{ GALAXY_ADMIN_API_KEY }} --username {{ GALAXY_ADMIN_EMAIL }} && deactivate "
 
 #_____________________________________
 #install pip module needed for delete_user python script
