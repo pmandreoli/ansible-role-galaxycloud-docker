@@ -10,16 +10,18 @@
 #_____________________________________
 #install pip module needed for delete_user python script
 
-- name: pip module install 
-  become_user: root
-  command: docker exec galaxydocker /bin/bash -c "pip install social-auth-core SQLAlchemy routes webob paste bleach babel psycopg2-binary numpy boltons pyyaml "
+  #- name: pip module install 
+  #  become_user: root
+  #  command: docker exec galaxydocker /bin/bash -c "pip install social-auth-core SQLAlchemy routes webob paste bleach babel psycopg2-binary numpy boltons pyyaml "
 
 #_____________________________________
 #run delete user python script
 
 - name: delete-user 
   become_user: root
-  command: docker exec galaxydocker /bin/bash -c "python /etc/galaxy/delete_galaxy_user.py -u admin@galaxy.org -c /etc/galaxy/galaxy.yml "
+  #command: docker exec galaxydocker /bin/bash -c "python /etc/galaxy/delete_galaxy_user.py -u admin@galaxy.org -c /etc/galaxy/galaxy.yml "
+  #fix test
+  command: docker exec galaxydocker /bin/bash -c ". $GALAXY_VIRTUAL_ENV/bin/activate && python /etc/galaxy/delete_galaxy_user.py -u admin@galaxy.org -c /etc/galaxy/galaxy.yml "
 
 #_____________________________________
 #test if there is the wf directory
