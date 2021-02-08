@@ -19,7 +19,7 @@
 
 - name: delete-user 
   become_user: root
-  command: docker exec galaxydocker /bin/bash -c ". $GALAXY_VIRTUAL_ENV/bin/activate && python /etc/galaxy/delete_galaxy_user.py -u admin@galaxy.org -c /etc/galaxy/galaxy.yml "
+  command: docker exec galaxydocker /bin/bash -c ". $GALAXY_VIRTUAL_ENV/bin/activate && python /etc/galaxy/delete_galaxy_user.py -u admin@galaxy.org -c /etc/galaxy/galaxy.yml; deactivate "
   ignore_errors: yes
 
 #_____________________________________
