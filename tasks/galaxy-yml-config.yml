@@ -37,5 +37,10 @@
 - name: share wf
   become_user: root
   command: docker exec galaxydocker /bin/bash -c ". $GALAXY_VIRTUAL_ENV/bin/activate;  workflow-install --workflow_path $GALAXY_HOME/workflows/ -g http://localhost:80 -u {{ GALAXY_ADMIN_EMAIL }} -p {{ GALAXY_ADMIN_PASSWORD }} "
-  when: testdir|success
+  when: testdir|success and galaxy_flavor != 'alvera/galaxy_vinyl:20.05' 
+
+- name: share wf vinyl
+  become_user: root
+  command: docker exec galaxydocker /bin/bash -c ". /galaxy_venv/bin/activate;  workflow-install --workflow_path $GALAXY_HOME/workflows/ -g http://localhost:80 -u {{ GALAXY_ADMIN_EMAIL }} -p {{ GALAXY_ADMIN_PASSWORD }} "
+  when: testdir|success and galaxy_flavor == 'alvera/galaxy_vinyl:20.05' 
 
