@@ -41,6 +41,6 @@
 
 - name: share wf vinyl
   become_user: root
-  command: docker exec gifted_grothendieck /tool_deps/_conda/bin/workflow-install --workflow_path /home/galaxy/workflows/ -g http://localhost:80 -u {{ GALAXY_ADMIN_EMAIL }} -p {{ GALAXY_ADMIN_PASSWORD }}
+  command: docker exec galaxydocker /tool_deps/_conda/bin/workflow-install --workflow_path /home/galaxy/workflows/ -g http://localhost:80 -u {{ GALAXY_ADMIN_EMAIL }} -p {{ GALAXY_ADMIN_PASSWORD }}
   when: testdir|success and galaxy_flavor == 'alvera/galaxy_vinyl:20.05' 
 
