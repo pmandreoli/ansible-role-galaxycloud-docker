@@ -21,13 +21,22 @@
 # create the local cvmfs directory tree in order to mount cvmfs configuration
 # files into galaxydocker
 
-- name: cvmfs local dir tree creation
+- name: cvmfs local dir tree creation and proftpd config dir
   become_user: root
   file:
     path: "{{ item.path }}"
     state: "{{ item.state }}"
   with_items:
+    - { path: /etc/proftpd , state: directory }
     - { path: /etc/cvmfs/default.d , state: directory }
     - { path: /etc/cvmfs/keys , state: directory }
     - { path: /etc/cvmfs/config.d , state: directory }
   when: refdata_cvmfs_repository_name != "data.galaxyproject.org"
+
+- name: Copy proftpd configuration file
+  template:
+    src: '../templates/proftpd.conf.j2'
+    dest: '/etc/proftpd/proftpd.conf'
+  become_user: root
+  become_method: sudo
+

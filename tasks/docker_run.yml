@@ -9,9 +9,7 @@
     name: galaxydocker
     image: "{{ galaxy_flavor }}"
     state: started
-    ports:
-      - "80:80"
-      - "21:21"
+    network_mode: host
     detach: yes
     privileged: yes
     env_file: "/etc/galaxy/.mygalaxyenv"
@@ -22,6 +20,7 @@
       - "/etc/cvmfs/default.local:/etc/cvmfs/default.local:rw"
       - "/etc/cvmfs/config.d:/etc/cvmfs/config.d:rw"
       - "/etc/galaxy/tool_data_tables:/etc/galaxy/tool_data_tables:rw"
+      - "/etc/proftpd/proftpd.conf:/etc/proftpd/proftpd.conf:rw"
   when: ansible_version.full >= "2.4.0.0"
 
 - name: "[ansible < 2.4] Galaxy Docker run (with tool_data_table mod)"
@@ -29,9 +28,7 @@
     name: galaxydocker
     image: "{{ galaxy_flavor }}"
     state: started
-    ports:
-      - "80:80"
-      - "21:21"
+    net: host
     detach: yes
     privileged: yes
     env_file: "/etc/galaxy/.mygalaxyenv"
@@ -42,4 +39,5 @@
       - "/etc/cvmfs/default.local:/etc/cvmfs/default.local:rw"
       - "/etc/cvmfs/config.d:/etc/cvmfs/config.d:rw"
       - "/etc/galaxy/tool_data_tables:/etc/galaxy/tool_data_tables:rw"
+      - "/etc/proftpd/proftpd.conf:/etc/proftpd/proftpd.conf:rw"
   when: ansible_version.full < "2.4.0.0"
